@@ -1,10 +1,11 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Vote extends Model { }
+class Comment extends Model { }
 
-Vote.init(
+Comment.init(
     {
+        // columns will go here
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -25,15 +26,22 @@ Vote.init(
                 model: 'post',
                 key: 'id'
             }
+        },
+        comment_text: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                // this means the password must be at least four characters long
+                len: [1]
+            }
         }
     },
     {
         sequelize,
-        timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: 'vote'
+        modelName: 'comment'
     }
 );
 
-module.exports = Vote;
+module.exports = Comment;
